@@ -1,0 +1,19 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-localrootdemo}
+      MYSQL_DATABASE: sizesure
+      MYSQL_USER: sizesure
+      MYSQL_PASSWORD: ${DB_PASSWORD:-localdemo}
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - sizesure_mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      retries: 10
+volumes:
+  sizesure_mysql:

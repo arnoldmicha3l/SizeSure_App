@@ -1,0 +1,39 @@
+# IntelliJ IDEA / VS Code
+.idea/
+.vscode/
+*.iml
+
+# Java / Maven
+target/
+**/target/
+*.class
+
+# Node.js dependencies
+node_modules/
+**/node_modules/
+
+# Frontend build files
+dist/
+**/dist/
+
+# Environment variables
+.env
+**/.env
+.env.*
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Local backend settings
+application-local.properties
+**/application-local.properties
+
+# Logs
+*.log
+logs/
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+*.tsbuildinfo
