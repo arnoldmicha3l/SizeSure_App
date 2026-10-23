@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
 
       proxy: {
         '/api': {
-          target: env.VITE_BACKEND_ORIGIN || 'http://localhost:8081',
+          target: env.VITE_BACKEND_ORIGIN || 'http://127.0.0.1:8080',
           changeOrigin: true
         }
       }
