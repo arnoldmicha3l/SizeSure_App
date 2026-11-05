@@ -10,7 +10,7 @@ import {
   SlidersHorizontal
 } from 'lucide-react';
 import {
-  api, json,
+  api, json, resetCsrf,
   type Profile, type Chart, type Size,
   type Dimension, type Comparison,
   type Unit, type Fit
@@ -40,12 +40,13 @@ function Layout({ children }: { children: React.ReactNode }) {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <header className="header">
         <Link to="/" aria-label="SizeSure home">
-          <img src="/sizesure-logo.png" alt="SizeSure" className="logo" />
+          <span className="wordmark">SIZE<span>SURE</span><small>ATELIER</small></span>
         </Link>
         <nav aria-label="Main navigation" className="desktop-nav">
-          <NavLink to="/how-it-works">How it works</NavLink>
-          <NavLink to="/profiles">My measurements</NavLink>
-          <NavLink to="/charts">Seller charts</NavLink>
+          <NavLink to="/how-it-works">The method</NavLink>
+          <NavLink to="/profiles">Measurements</NavLink>
+          <NavLink to="/charts">Size charts</NavLink>
+          <NavLink to="/account">Account</NavLink>
         </nav>
         <button
           className="mobile-menu-button"
@@ -66,17 +67,18 @@ function Layout({ children }: { children: React.ReactNode }) {
           <NavLink onClick={() => setMenuOpen(false)} to="/how-it-works">How it works</NavLink>
           <NavLink onClick={() => setMenuOpen(false)} to="/profiles">My measurements</NavLink>
           <NavLink onClick={() => setMenuOpen(false)} to="/charts">Seller charts</NavLink>
+          <NavLink onClick={() => setMenuOpen(false)} to="/account">Account</NavLink>
           <NavLink onClick={() => setMenuOpen(false)} to="/profile/new">Get started →</NavLink>
         </div>
       )}
       <main id="main-content">{children}</main>
       <footer>
         <div className="footer-top">
-          <img src="/sizesure-logo.png" alt="SizeSure" />
-          <p>Clarity in every measurement.</p>
+          <span className="wordmark footer-wordmark">SIZE<span>SURE</span><small>ATELIER</small></span>
+          <p>The art of knowing your size.</p>
         </div>
         <div className="footer-bottom">
-          <span>Academic prototype · Black Bitles · Cebu Institute of Technology – University</span>
+          <span>Academic prototype · Measurement comparisons only · No real purchases or payments</span>
           <span><Link to="/privacy">Privacy</Link> · <Link to="/help">Help</Link></span>
         </div>
       </footer>
@@ -87,73 +89,35 @@ function Layout({ children }: { children: React.ReactNode }) {
 function Home() {
   return (
     <>
-      <section className="hero">
-        <div className="hero-left">
-          <Banner>A BETTER WAY TO COMPARE SIZES</Banner>
-          <h1>
-            Different sellers.<br />
-            Different size charts.<br />
-            <em>One clearer decision.</em>
-          </h1>
-          <p>
-            Keep your measurements in one place. Enter any seller's size chart.
-            Understand how the numbers compare — without the guesswork.
-          </p>
-          <div className="actions">
-            <Link className="button dark" to="/profile/new">
-              Create my measurement profile <ArrowRight size={18} />
-            </Link>
-            <Link className="button outline" to="/how-it-works">
-              Explore how it works
-            </Link>
+      <section className="atelier-hero" aria-labelledby="atelier-title">
+        <div className="atelier-hero-copy">
+          <div className="atelier-overline"><span className="atelier-line" /> SIZE SURE / A NEW PERSPECTIVE ON FIT <span>EST. 2026</span></div>
+          <p className="atelier-edition">THE MEASUREMENT EDITION <span>— 001</span></p>
+          <h1 id="atelier-title">Know your size.<br /><em>Own your style.</em></h1>
+          <p className="atelier-lede">An elegant way to understand your measurements, interpret a seller's size chart, and choose with greater clarity. No guessing. Just the numbers, beautifully explained.</p>
+          <div className="atelier-actions">
+            <Link className="atelier-primary" to="/profile/new">Begin your fitting journey <ArrowRight size={18} /></Link>
+            <Link className="atelier-secondary" to="/how-it-works">Discover the method <MoveUpRight size={17} /></Link>
           </div>
-          <div className="hero-note">
-            01 / MEASURE &nbsp; · &nbsp; 02 / COMPARE &nbsp; · &nbsp; 03 / UNDERSTAND
-          </div>
+          <div className="atelier-hero-bottom"><span>01 — MEASURE</span><span>02 — COMPARE</span><span>03 — UNDERSTAND</span></div>
         </div>
-        <div className="hero-right">
-          <div className="art-top">THE FIT, DECODED. <span>SS—01</span></div>
-          <div className="art-circle">
-            <div className="art-ring ring1" />
-            <div className="art-ring ring2" />
-            <div className="art-inner">
-              <Ruler size={42} strokeWidth={1} />
-              <span>MEASURE</span>
-              <strong>COMPARE</strong>
-              <span>DECIDE</span>
-            </div>
-          </div>
-          <div className="art-bottom">YOUR MEASUREMENTS<br />YOUR REFERENCE.</div>
+        <div className="atelier-hero-art" aria-label="Abstract editorial illustration of fabric and measurement lines" role="img">
+          <div className="atelier-art-header"><span>THE FIT STUDY</span><span>FIG. 001 / 003</span></div>
+          <div className="atelier-fabric"><div className="atelier-fabric-fold" /><div className="atelier-fabric-thread" /></div>
+          <div className="atelier-art-footer"><span>FORM / PROPORTION / PRECISION</span><span>THE ATELIER</span></div>
         </div>
       </section>
-      <section className="intro">
-        <div className="eyebrow">THE PROCESS / 03 STEPS</div>
-        <h2>Less guessing.<br /><em>More understanding.</em></h2>
-        <div className="steps">
-          <article>
-            <span>01</span><Ruler size={28} />
-            <h3>Your measurements</h3>
-            <p>Save chest, waist and hip measurements with your preferred fit and unit.</p>
-          </article>
-          <article>
-            <span>02</span><Layers3 size={28} />
-            <h3>The seller's chart</h3>
-            <p>Manually enter size options for the specific garment you're considering.</p>
-          </article>
-          <article>
-            <span>03</span><SlidersHorizontal size={28} />
-            <h3>Clear comparisons</h3>
-            <p>See matching dimensions, unit conversions and transparent guidance status.</p>
-          </article>
+      <section className="atelier-marquee" aria-label="Our approach"><span>YOUR MEASUREMENTS.</span><span className="marquee-star">✳</span><span>YOUR REFERENCE.</span><span className="marquee-star">✳</span><span>YOUR DECISION.</span></section>
+      <section className="atelier-process" aria-labelledby="process-heading">
+        <div className="atelier-process-top"><span className="atelier-kicker">THE PROCESS / THREE CONSIDERED STEPS</span><span className="atelier-kicker">MADE FOR REAL PEOPLE</span></div>
+        <h2 id="process-heading">The details make<br /><em>the difference.</em></h2>
+        <div className="atelier-process-grid">
+          <article><span className="atelier-step">01 / DISCOVER</span><Ruler size={32} strokeWidth={1.3}/><h3>Start with you.</h3><p>Record the measurements that matter, in centimeters or inches. You stay in control of your information.</p><Link to="/profile/new">Create a profile <ArrowRight size={15}/></Link></article>
+          <article><span className="atelier-step">02 / INTERPRET</span><Layers3 size={32} strokeWidth={1.3}/><h3>Read between sizes.</h3><p>Bring a seller's garment chart into focus. See dimensions side by side, without unsupported fit promises.</p><Link to="/charts">Explore size charts <ArrowRight size={15}/></Link></article>
+          <article><span className="atelier-step">03 / DECIDE</span><SlidersHorizontal size={32} strokeWidth={1.3}/><h3>Clarity, considered.</h3><p>Understand each measured difference before choosing. Recommendations appear only when the rules support them.</p><Link to="/how-it-works">How it works <ArrowRight size={15}/></Link></article>
         </div>
       </section>
-      <section className="cta-section">
-        <h2>Find clarity in<br /><em>the details.</em></h2>
-        <Link className="button light" to="/profile/new">
-          Start comparing <ArrowRight size={18} />
-        </Link>
-        <p>We compare measurements, not predict physical fit. Recommendations require approved rules.</p>
-      </section>
+      <section className="atelier-statement"><span className="atelier-kicker">SIZE SURE / OUR POINT OF VIEW</span><h2>Style is personal.<br /><em>Measurements should be clear.</em></h2><Link className="atelier-primary atelier-primary-light" to="/profile/new">Explore your measurements <ArrowRight size={17}/></Link><p>Academic prototype. No live marketplace, payment, or messaging service is represented as active.</p></section>
     </>
   );
 }
@@ -783,10 +747,10 @@ function Charts() {
             <MoveUpRight size={20} />
           </Link>
         ))}
-        <Link className="item-card add-card" to="/compare/new">
+        <Link className="item-card add-card" to="/chart/new">
           <Plus size={24} />
-          <h2>Enter a chart</h2>
-          <p>Start a new comparison.</p>
+          <h2>Create a size chart</h2>
+          <p>Add garment measurements for your customers.</p>
         </Link>
       </div>
     </div>
@@ -796,20 +760,49 @@ function Charts() {
 function ChartDetail() {
   const { id } = useParams();
   const nav = useNavigate();
+  const [accountRole, setAccountRole] = useState<'BUYER' | 'SELLER' | null>(null);
   const [c, set] = useState<Chart | null>(null);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [profileId, setProfileId] = useState('');
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    api<Chart>('/charts/' + id).then(set).catch(e => setError(e.message));
-    api<Profile[]>('/profiles')
-      .then(p => {
-        setProfiles(p);
-        setProfileId(p[0]?.id || '');
-      })
-      .catch(e => setError(e.message));
-  }, [id]);
+    useEffect(() => {
+      let active = true;
+
+      api<Chart>('/charts/' + id)
+        .then(chart => {
+          if (active) set(chart);
+        })
+        .catch(e => {
+          if (active) setError(e.message);
+        });
+
+      api<Account>('/auth/me')
+        .then(account => {
+          if (!active) return;
+
+          setAccountRole(account.role);
+
+          if (account.role === 'BUYER') {
+            api<Profile[]>('/profiles')
+              .then(profiles => {
+                if (!active) return;
+                setProfiles(profiles);
+                setProfileId(profiles[0]?.id || '');
+              })
+              .catch(e => {
+                if (active) setError(e.message);
+              });
+          }
+        })
+        .catch(e => {
+          if (active) setError(e.message);
+        });
+
+      return () => {
+        active = false;
+      };
+    }, [id]);
 
   async function compare() {
     try {
@@ -860,9 +853,10 @@ function ChartDetail() {
               ))}
             </div>
           </div>
-          <div className="form-section">
-            <h2>Compare with your profile</h2>
-            {profiles.length ? (
+                    {accountRole === 'BUYER' && (
+                      <div className="form-section">
+                        <h2>Compare with your profile</h2>
+                        {profiles.length ? (
               <div className="two-col">
                 <label className="field">
                   <span>Select profile</span>
@@ -880,12 +874,13 @@ function ChartDetail() {
                 </button>
               </div>
             ) : (
-              <Link className="button dark" to="/profile/new">
-                Create profile first
-              </Link>
-            )}
-          </div>
-          <div className="form-actions">
+                            <Link className="button dark" to="/profile/new">
+                              Create profile first
+                            </Link>
+                          )}
+                        </div>
+                      )}
+                        <div className="form-actions">
             <Link className="button outline" to={'/chart/' + id + '/edit'}>
               Edit chart
             </Link>
@@ -1240,6 +1235,45 @@ function MotionEnhancements() {
   return null;
 }
 
+type Account = {id:string;displayName:string;email:string;role:'BUYER'|'SELLER'};
+function AccountPage() {
+  const navigate=useNavigate();
+  const [mode,setMode]=useState<'login'|'register'>('login');
+  const [account,setAccount]=useState<Account|null>(null);
+  const [loading,setLoading]=useState(true);
+  const [busy,setBusy]=useState(false);
+  const [error,setError]=useState('');
+  const [name,setName]=useState('');
+  const [email,setEmail]=useState('');
+  const [password,setPassword]=useState('');
+  const [role,setRole]=useState<'BUYER'|'SELLER'>('BUYER');
+  useEffect(()=>{api<Account>('/auth/me').then(setAccount).catch(()=>{}).finally(()=>setLoading(false));},[]);
+  async function submit(e:React.FormEvent<HTMLFormElement>){
+    e.preventDefault();setBusy(true);setError('');
+    try {
+      const body=mode==='register'?{displayName:name,email,password,role}:{email,password};
+      const user=await api<Account>('/auth/'+mode,json('POST',body));
+      setAccount(user);setPassword('');navigate('/account');
+    } catch(e) {setError(e instanceof Error?e.message:'Please try again.');}
+    finally {setBusy(false);}
+  }
+  async function logout(){setBusy(true);setError('');try {await api<void>('/auth/logout',{method:'POST'});resetCsrf();setAccount(null);}catch(e){setError(e instanceof Error?e.message:'Logout failed');}finally{setBusy(false);}}
+  return <section className="auth-page"><div className="auth-intro"><span className="atelier-kicker">SIZESURE / PRIVATE ATELIER</span><h1>Belong to<br/><em>your own fit.</em></h1><p>A considered space for your measurements, garments, and conversations. Your account begins here.</p><span className="auth-note">ACADEMIC PROTOTYPE · NO REAL PAYMENTS</span></div><div className="auth-panel">
+    {loading?<p role="status">Checking your session…</p>:account?<><span className="atelier-kicker">YOUR ACCOUNT</span><h2>Welcome, {account.displayName}.</h2><p>{account.email}</p><p>Account type: {account.role==='BUYER'?'Buyer':'Seller'}</p><p className="auth-hint">Account authentication is active. Private measurement ownership, seller messaging, and transactions are still being developed.</p><button type="button" className="atelier-primary" disabled={busy} onClick={logout}>Sign out <ArrowRight size={17}/></button></>:<>
+    <div className="auth-tabs" role="group" aria-label="Account action"><button type="button" aria-pressed={mode==='login'} onClick={()=>{setMode('login');setError('');}}>Sign in</button><button type="button" aria-pressed={mode==='register'} onClick={()=>{setMode('register');setError('');}}>Create account</button></div>
+    <h2>{mode==='login'?'Welcome back.':'A new beginning.'}</h2>
+    <p>{mode==='login'?'Sign in to your SizeSure account.':'Create a buyer or seller account.'}</p>
+    <form onSubmit={submit} className="auth-form">
+      {mode==='register'&&<><label htmlFor="auth-name">Your name</label><input id="auth-name" autoComplete="name" maxLength={120} required value={name} onChange={e=>setName(e.target.value)}/></>}
+      <label htmlFor="auth-email">Email address</label><input id="auth-email" type="email" autoComplete="email" required value={email} onChange={e=>setEmail(e.target.value)}/>
+      <label htmlFor="auth-password">Password</label><input id="auth-password" type="password" autoComplete={mode==='login'?'current-password':'new-password'} minLength={mode==='register'?12:undefined} required value={password} onChange={e=>setPassword(e.target.value)}/>
+      {mode==='register'&&<><label htmlFor="auth-role">I am joining as</label><select id="auth-role" value={role} onChange={e=>setRole(e.target.value as 'BUYER'|'SELLER')}><option value="BUYER">Buyer</option><option value="SELLER">Seller</option></select><p className="auth-hint">Use at least 12 characters for your password.</p></>}
+      {error&&<p className="auth-error" role="alert">{error}</p>}
+      <button className="atelier-primary" disabled={busy} type="submit">{busy?'Please wait…':mode==='login'?'Sign in':'Create account'} <ArrowRight size={17}/></button>
+    </form></>}
+  </div></section>;
+}
+
 export default function App() {
   return (
     <Layout>
@@ -1248,6 +1282,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/how-it-works" element={<Info type="how" />} />
         <Route path="/help" element={<Info type="help" />} />
+        <Route path="/account" element={<AccountPage />} />
         <Route path="/privacy" element={<Info type="privacy" />} />
         <Route path="/profiles" element={<Profiles />} />
         <Route path="/profile/new" element={<ProfileForm />} />
