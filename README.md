@@ -47,3 +47,7 @@ Java 21, Spring Boot 3.3.5, Spring Web, Spring Data JPA, Flyway, MySQL 8, React 
 ## Documentation
 
 See `docs/api.md`, `docs/decision-log.md`, `docs/requirements-traceability.md`, `docs/professor-demo.md`, and `docs/qa-evidence.md`.
+
+
+## Implementation 02
+See IMPLEMENTATION_STATUS.md. To run: configure MySQL per backend/.env.example, run backend via Maven, then `cd frontend && npm ci && npm run build && npm run dev -- --port 5180`. Visit `/account` to register/login. Existing measurement data is not user-scoped yet; only use synthetic demo data.
